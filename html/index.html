@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <canvas width="800" height="600" id="sudoku">
+        </canvas>
+
+        <script>
+            let c = document.getElementById("sudoku");
+            let ctx = c.getContext("2d");
+
+            let cellOffset = 40;
+            let cellSize = 40;
+
+            let baseUrl = '/';
+
+            setInterval(() => {
+                getGrid();
+            }, 5000);
+
+            function drawCell(x, y) {
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        ctx.beginPath();
+                        ctx.rect(cellOffset+x*3*cellSize+i*cellSize,
+                            cellOffset+y*3*cellSize+j*cellSize, cellSize, cellSize);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            function renderNumber(x, y, n) {
+                ctx.font = "30px Monospace";
+                ctx.fillText(n, cellOffset+x*cellSize+cellSize/5, cellOffset*2+y*cellSize-cellSize/5);
+            }
+
+            function renderIndex() {
+                ctx.font = "30px Monospace";
+                for (let x = 0; x < 9; x++) {
+                    ctx.fillText(x+1, cellOffset+x*cellSize+cellSize/5, 30);
+                }
+                for (let y = 0; y < 9; y++) {
+                    ctx.fillText(String.fromCharCode(y+65), 10, cellOffset+y*cellSize+cellSize/5+20);
+                }
+            }
+
+            function renderGrid(grid) {
+                ctx.clearRect(0, 0, c.width, c.height);
+                for (let i = 0; i < 3; i++) {
+                    for (let j = 0; j < 3; j++) {
+                        drawCell(i, j)
+                    }
+                }
+                for (let y = 0; y < 9; y++) {
+                    for (let x = 0; x < 9; x++) {
+                        if (grid[y][x] != 0) {
+                            renderNumber(x, y, grid[y][x])
+                        }
+                    }
+                }
+
+                renderIndex();
+            }
+
+            async function getGrid() {
+                const response = await fetch('/current');
+                const grid = await response.json();
+                renderGrid(grid[0]);
+            }
+
+            getGrid();
+        </script>
+    </body>
+</html>
