@@ -7,9 +7,15 @@ import time
 import flask
 import copy
 
+import os
+
 app = flask.Flask(__name__, static_url_path='', static_folder='./html/')
-app.config["DEBUG"] = True
+
+
+if os.getenv('SUDOKU_DEBUG'):
+    app.config["DEBUG"] = True
 config = None # global config object
+generate_t = None
 
 # a simple struct like object
 # just holds some variables
@@ -102,6 +108,7 @@ def index():
 
 def run():
     global config
+    global generate_t
     logging.basicConfig(level=logging.DEBUG)
     config = init()
 
@@ -112,5 +119,7 @@ def run():
     generate_t = Thread(target=helper, args=[config])
     generate_t.start()
 
-    app.run(port=config.port, host='0.0.0.0')
+def start_app():
+    global config
+    app.run(port=config.port)
 

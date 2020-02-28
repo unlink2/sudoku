@@ -163,3 +163,4 @@ def make_complete_board(grid):
 
 if __name__ == '__main__':
     api.run()
+    api.start_app()
