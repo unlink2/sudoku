@@ -18,11 +18,19 @@
             }, 5000);
 
             function drawCell(x, y) {
+                if ((x == 1 && y == 0)
+                    || ((x == 2 || x == 0) && y == 1)
+                    || (x == 1 && y == 2)) {
+                    ctx.fillStyle = '#d3d3d3';
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                }
                 for (let i = 0; i < 3; i++) {
                     for (let j = 0; j < 3; j++) {
                         ctx.beginPath();
                         ctx.rect(cellOffset+x*3*cellSize+i*cellSize,
                             cellOffset+y*3*cellSize+j*cellSize, cellSize, cellSize);
+                        ctx.fill();
                         ctx.stroke();
                     }
                 }
@@ -30,11 +38,13 @@
 
             function renderNumber(x, y, n) {
                 ctx.font = "30px Monospace";
+                ctx.fillStyle = 'black';
                 ctx.fillText(n, cellOffset+x*cellSize+cellSize/5, cellOffset*2+y*cellSize-cellSize/5);
             }
 
             function renderIndex() {
                 ctx.font = "30px Monospace";
+                ctx.fillStyle = 'black';
                 for (let x = 0; x < 9; x++) {
                     ctx.fillText(x+1, cellOffset+x*cellSize+cellSize/5, 30);
                 }
