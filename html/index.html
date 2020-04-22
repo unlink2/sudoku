@@ -5,6 +5,8 @@
         </canvas>
 
         <script>
+            const FONT_BOLD = '900 italic 25pt Monospace';
+            const FONT = '25pt Monospace';
             let c = document.getElementById("sudoku");
             let ctx = c.getContext("2d");
 
@@ -37,13 +39,21 @@
             }
 
             function renderNumber(x, y, n) {
-                ctx.font = "30px Monospace";
+                let xFloor = Math.floor(x/3);
+                let yFloor = Math.floor(y/3);
+                if ((xFloor == 1 && yFloor == 0)
+                    || ((xFloor == 2 || xFloor== 0) && yFloor == 1)
+                    || (xFloor == 1 && yFloor == 2)) {
+                    ctx.font = FONT_BOLD;
+                } else {
+                    ctx.font = FONT;
+                }
                 ctx.fillStyle = 'black';
                 ctx.fillText(n, cellOffset+x*cellSize+cellSize/5, cellOffset*2+y*cellSize-cellSize/5);
             }
 
             function renderIndex() {
-                ctx.font = "30px Monospace";
+                ctx.font = FONT;
                 ctx.fillStyle = 'black';
                 for (let x = 0; x < 9; x++) {
                     ctx.fillText(x+1, cellOffset+x*cellSize+cellSize/5, 30);
