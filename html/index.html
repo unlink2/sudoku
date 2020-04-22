@@ -53,6 +53,30 @@
             }
 
             function renderIndex() {
+                let oldWidth = ctx.lineWidth;
+                ctx.lineWidth = "5";
+                // draw 4 bold lines for readability
+                ctx.beginPath();
+                ctx.moveTo(cellOffset+cellSize*3, cellOffset);
+                ctx.lineTo(cellOffset+cellSize*3, cellOffset+cellSize*9);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(cellOffset+cellSize*6, cellOffset);
+                ctx.lineTo(cellOffset+cellSize*6, cellOffset+cellSize*9);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cellOffset, cellOffset+cellSize*3);
+                ctx.lineTo(cellOffset+cellSize*9, cellOffset+cellSize*3);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(cellOffset, cellOffset+cellSize*6);
+                ctx.lineTo(cellOffset+cellSize*9, cellOffset+cellSize*6);
+                ctx.stroke();
+
+                ctx.lineWidth = oldWidth;
+
                 ctx.font = FONT;
                 ctx.fillStyle = 'black';
                 for (let x = 0; x < 9; x++) {
