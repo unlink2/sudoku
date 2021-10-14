@@ -1,4 +1,4 @@
-#!/usr/bin/en python3
+#!/usr/bin/env python3
 
 from api import app
 import api

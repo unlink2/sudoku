@@ -84,7 +84,7 @@ def put():
         x = int(flask.request.args.get('x'))
         y = int(flask.request.args.get('y'))
         n = int(flask.request.args.get('n'))
-    except NumberFormatError:
+    except Exception:
         x = None
         y = None
         n = None
