@@ -21,8 +21,10 @@ generate_t = None
 # just holds some variables
 class Config:
     def __init__(self):
+        # TODO allow user configuratiuon!
         self.port = 8089
         self.grid_len = 100
+        self.difficulty = 40
         self.grids = {'grid_array': []}
 
 def init():
@@ -43,7 +45,7 @@ def load_grids(config):
 
 def gen_grid(config):
     logging.info('{}/{} grids. Generating new grid...'.format(len(config.grids['grid_array']), config.grid_len))
-    new_grid = sudoku.generate()
+    new_grid = sudoku.generate(0, config.difficulty)
     config.grids['grid_array'].append(new_grid)
     with open('./config/grids.json', 'w') as fp:
         json.dump(config.grids, fp)

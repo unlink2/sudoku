@@ -91,13 +91,16 @@ class Bot(irc.bot.SingleServerIRCBot):
                 + '/put?x=' + urllib.parse.quote(self.match_x(args[0]))
                 + '&y=' + urllib.parse.quote(self.match_y(args[1]))
                 + '&n=' + urllib.parse.quote(args[2]))
-                parsed = res.json()
-                if parsed == 'bad_request':
-                    c.privmsg(self.channel, "Usage: !put <1-9> <A-I> <1-9>")
-                elif parsed == 'bad_input':
-                    c.privmsg(self.channel, ":(")
-                else:
-                    c.privmsg(self.channel, ":)")
+                try:
+                    parsed = res.json()
+                    if parsed == 'bad_request':
+                        c.privmsg(self.channel, "Usage: !put <1-9> <A-I> <1-9>")
+                    elif parsed == 'bad_input':
+                        c.privmsg(self.channel, ":(")
+                    else:
+                        c.privmsg(self.channel, ":)")
+                except:
+                    c.privmsg(self.channel, "Bad request!")
         elif cmd == "!reset" and self.is_admin(nick):
             requests.get(self.config.sudoku_base + '/next')
             c.privmsg(self.channel, "Generating...")
